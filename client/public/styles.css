@@ -1,0 +1,24 @@
+
+.navbar-brand {
+  font-size: 1.5em;
+}
+
+
+.navbar-brand img {
+  display: inline-block;
+  width: 50px;
+}
+
+#root h2 {
+  margin-top: 0px;
+}
+
+#root h4 {
+  margin-top: 20px;
+}
+
+.btn-action {
+  outline: none;
+  border: none;
+}
+
