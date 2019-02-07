@@ -8,11 +8,13 @@ class CallWindow extends Component {
     super(props);
     this.state = {
       Video: true,
-      Audio: true
+      Audio: true,
+      ShareScreen: false
     };
 
     this.btns = [
       { type: 'Video', icon: 'fa-video-camera' },
+      { type: 'ShareScreen', icon: 'fa-desktop' },
       { type: 'Audio', icon: 'fa-microphone' }
     ];
   }
@@ -50,10 +52,17 @@ class CallWindow extends Component {
    * @param {String} deviceType - Type of the device eg: Video, Audio
    */
   toggleMediaDevice(deviceType) {
-    this.setState({
-      [deviceType]: !this.state[deviceType]
-    });
-    this.props.mediaDevice.toggle(deviceType);
+    this.props.mediaDevice.toggle(deviceType, !this.state[deviceType]);
+    if(deviceType === 'ShareScreen'){
+      this.setState({
+        [deviceType]: !this.state[deviceType],
+        "Video": (!this.state.ShareScreen) ? false : this.state.Video
+      });
+    }else{
+      this.setState({
+        [deviceType]: !this.state[deviceType]
+      });
+    }
   }
 
   renderControlButtons() {
@@ -66,6 +75,7 @@ class CallWindow extends Component {
         key={`btn${btn.type}`}
         className={getClass(btn.icon, btn.type)}
         onClick={() => this.toggleMediaDevice(btn.type)}
+        disabled={btn.type === 'Video' && this.state.ShareScreen}
       />
     ));
   }
