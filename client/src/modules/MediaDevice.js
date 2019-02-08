@@ -111,22 +111,22 @@ class MediaDevice extends Emitter {
           if(navigator.mediaDevices.getDisplayMedia) {
               navigator.mediaDevices.getDisplayMedia({video: true}).then(stream => {
                 this.screenStream = stream;
-                if(this.stream){
-                  this.stream[`getAudioTracks`]().forEach((track) => {
-                    this.screenStream.addTrack(track);
-                  });
-                }
+                // if(this.stream){
+                //   this.stream[`getAudioTracks`]().forEach((track) => {
+                //     this.screenStream.addTrack(track);
+                //   });
+                // }
                 cb();
               }, this.getDisplayMediaError).catch(this.getDisplayMediaError);
           } 
           else if(navigator.getDisplayMedia) {
               navigator.getDisplayMedia({video: true}).then(stream => {
                   this.screenStream = stream;
-                  if(this.stream){
-                    this.stream[`getAudioTracks`]().forEach((track) => {
-                      this.screenStream.addTrack(track);
-                    });
-                  }
+                  // if(this.stream){
+                  //   this.stream[`getAudioTracks`]().forEach((track) => {
+                  //     this.screenStream.addTrack(track);
+                  //   });
+                  // }
                   cb();
               }, this.getDisplayMediaError).catch(this.getDisplayMediaError);
           }
