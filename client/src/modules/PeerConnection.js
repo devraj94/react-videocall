@@ -36,6 +36,14 @@ class PeerConnection extends Emitter {
           if (isCaller) socket.emit('request', { to: this.friendID });
           else this.createOffer();
       })
+      .on('screenStream', (stream) => {
+        this.pc.addStream(stream);
+        if(isCaller){
+          this.emit('localStream', stream);
+        }
+          if (isCaller) socket.emit('request', { to: this.friendID });
+          else this.createOffer();
+      })
       .on('streamReplace', (streamNew, streamOld) => {
         this.pc.removeStream(streamOld);
         this.pc.addStream(streamNew);

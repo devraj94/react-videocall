@@ -42,8 +42,9 @@ class CallWindow extends Component {
   }
 
   setMediaStream() {
-    const { peerSrc, localSrc } = this.props;
+    const { peerSrc, peerScreenSrc, localSrc } = this.props;
     if (this.peerVideo && peerSrc) this.peerVideo.srcObject = peerSrc;
+    if (this.peerScreenVideo && peerScreenSrc) this.peerScreenVideo.srcObject = peerScreenSrc;
     if (this.localVideo && localSrc) this.localVideo.srcObject = localSrc;
   }
 
@@ -83,6 +84,7 @@ class CallWindow extends Component {
     const { status } = this.props;
     return (
       <div className={classnames('call-window', status)}>
+        <video id="peerScreenVideo" ref={el => this.peerScreenVideo = el} autoPlay />
         <video id="peerVideo" ref={el => this.peerVideo = el} autoPlay />
         <video id="localVideo" ref={el => this.localVideo = el} autoPlay muted />
         <div className="video-control">

@@ -16,7 +16,8 @@ class App extends Component {
       callModal: '',
       callFrom: '',
       localSrc: null,
-      peerSrc: null
+      peerSrc: null,
+      peerScreenSrc: null
     };
     this.pc = {};
     this.config = null;
@@ -47,7 +48,13 @@ class App extends Component {
         if (!isCaller) newState.callModal = '';
         this.setState(newState);
       })
-      .on('peerStream', src => this.setState({ peerSrc: src }))
+      .on('peerStream', (src) => {
+        if(!this.state.peerSrc){
+          this.setState({ peerSrc: src })
+        }else{
+          this.setState({ peerScreenSrc: src })
+        }
+      })
       .start(isCaller, config);
   }
 
@@ -78,6 +85,7 @@ class App extends Component {
           status={this.state.callWindow}
           localSrc={this.state.localSrc}
           peerSrc={this.state.peerSrc}
+          peerScreenSrc={this.state.peerScreenSrc}
           config={this.config}
           mediaDevice={this.pc.mediaDevice}
           endCall={this.endCallHandler}

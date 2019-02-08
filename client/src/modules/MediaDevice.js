@@ -25,8 +25,14 @@ class MediaDevice extends Emitter {
         this.videoSharing = true;
         this.screenSharing = false;
         this.emit('stream', this.stream);
+        this.startScreenSharing(() => {
+          this.screenSharing = true;
+          this.emit('screenStream', this.screenStream);
+        });
       })
       .catch(err => console.log(err));
+
+
 
 
     return this;
@@ -39,11 +45,11 @@ class MediaDevice extends Emitter {
   toggle(type, on) {
     if(type === 'Video' && this.stream){
       if(on && !this.videoSharing){
-        if(this.screenStream){
-          this.emit('streamReplace', this.stream, this.screenStream);
-        }else{
-          this.emit('stream', this.stream);
-        }
+        // if(this.screenStream){
+        //   this.emit('streamReplace', this.stream, this.screenStream);
+        // }else{
+          // this.emit('stream', this.stream);
+        // }
         this.videoSharing = true;
       }else if(!on && this.videoSharing){
         this.videoSharing = false;
@@ -54,13 +60,13 @@ class MediaDevice extends Emitter {
     }else if(type === 'ShareScreen'){
       this.startScreenSharing(() => {
         if(on && !this.screenSharing){
-          if(this.stream){
-            this.emit('streamReplace', this.screenStream, this.stream);
-          }else{
-            this.emit('stream', this.screenStream);
-          }
+          // if(this.stream){
+          //   this.emit('streamReplace', this.screenStream, this.stream);
+          // }else{
+          //   this.emit('stream', this.screenStream);
+          // }
           this.screenSharing = true;
-          this.videoSharing = false;
+          // this.videoSharing = false;
         }else if(!on && this.screenSharing){
           this.screenSharing = false;
         }
@@ -91,6 +97,9 @@ class MediaDevice extends Emitter {
   stop() {
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());
+    }
+    if (this.screenStream) {
+      this.screenStream.getTracks().forEach(track => track.stop());
     }
     return this;
   }

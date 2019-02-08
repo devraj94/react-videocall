@@ -147,6 +147,13 @@
 }
 
 .call-window #peerVideo {
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  height: 20%;
+}
+
+.call-window #peerScreenVideo {
   width: 100%;
   height: 100%;
 }
